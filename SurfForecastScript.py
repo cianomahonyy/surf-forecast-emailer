@@ -5,7 +5,6 @@ import requests
 import smtplib
 import imghdr
 from datetime import datetime
-import matplotlib.pyplot as plt
 import os
 from bs4 import BeautifulSoup
 from datetime import datetime
