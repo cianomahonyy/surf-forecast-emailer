@@ -17,7 +17,7 @@ from email.mime.text import MIMEText
 # Setting up the Magicseaweed API
 response = requests.get("http://magicseaweed.com/api/28c500e859576a4f8bbcbe09c83e2492/forecast/?spot_id=52")
 data = json.loads(response.text)
-
+print('test')
 
 # Function for going through forecast
 def findGoodSwell():
