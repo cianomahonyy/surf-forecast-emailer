@@ -2,7 +2,10 @@
 
 import json
 import requests
+import config
 import smtplib
+import psycopg2
+import psycopg2.extras
 import imghdr
 from datetime import datetime
 import os
@@ -12,16 +15,17 @@ from email.message import EmailMessage
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
+from itertools import chain
 
 
-# Setting up the Magicseaweed API
-response = requests.get("http://magicseaweed.com/api/28c500e859576a4f8bbcbe09c83e2492/forecast/?spot_id=52")
-data = json.loads(response.text)
-print('test')
+
 
 # Function for going through forecast
 def findGoodSwell():
 
+	# Setting up the Magicseaweed API
+	response = requests.get("http://magicseaweed.com/api/28c500e859576a4f8bbcbe09c83e2492/forecast/?spot_id=52")
+	data = json.loads(response.text)
 
 
 	forecast = []
@@ -82,12 +86,11 @@ def findGoodSwell():
 
 
 # Function to send the email
-def sendEmail():
+def sendEmail(mailList):
 
 	# Email variables
-	EMAIL_ADDRESS = 'cianomahony22@gmail.com'
-	EMAIL_PASSWORD = 'qhvmdgbzospefrtr'
-	contacts = ['ciaantonnta@gmail.com']
+	EMAIL_ADDRESS = 'surfforecastcork@gmail.com'
+	EMAIL_PASSWORD = config.EMAIL_PASSWORD
 	emailForecast = []
 	emailForecast, dateList, starList, swellList, windDirectionList, windSpeedList, forecastDay  = findGoodSwell();
 	currentDay = datetime.today().strftime('%A')
@@ -96,7 +99,7 @@ def sendEmail():
 	msg = MIMEMultipart()
 	msg['Subject'] = 'Surf Forecast'
 	msg['From'] = EMAIL_ADDRESS
-	msg['To'] = 'ciaantonnta@gmail.com'
+	msg['To'] = ', '.join(mailList)
 
 
 	# HTML String for displaying the data
@@ -142,7 +145,7 @@ def sendEmail():
 	print(currentDay)
 	print(forecastDay)
 	if(currentDay == forecastDay):
-		forecastString = forecastString + """<h1 style="color:#009879;text-align:center;">Waves Are Good Today!</h1>
+		forecastString = forecastString + """<h1 style="color:#009879;text-align:center;">Today's Waves</h1>
 											  <img class="webcam-image" src="cid:image1"/>
 											  <table class="content-table">
 											  	<thead>
@@ -213,11 +216,41 @@ def getWebcamImage():
 	file.close()
 
 
+
+
+def connectDB(): 
+
+
+	conn = psycopg2.connect(dbname=config.DB_NAME, port=5432, user=config.DB_USER, password=config.DB_PASS, host=config.DB_HOST)
+
+
+	cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+	s = "SELECT email FROM surfForecastEmails;"
+
+	cur.execute(s)
+
+	listEmails = cur.fetchall();
+
+	flattenList = list(chain.from_iterable(listEmails))
+
+
+
+	return flattenList
+
+	conn.commit()
+	cur.close()
+	conn.close()
+
+
+
+connectDB();
 # Calling the functions
 getWebcamImage();
 findGoodSwell();
 print(findGoodSwell());
-sendEmail();
+sendEmail(connectDB());
+
 
 
 
