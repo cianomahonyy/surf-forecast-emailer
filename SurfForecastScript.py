@@ -4,7 +4,6 @@ import json
 import requests
 import config
 import smtplib
-import pg
 import psycopg2
 import psycopg2.extras
 import imghdr
@@ -242,6 +241,7 @@ def connectDB():
 	conn.commit()
 	cur.close()
 	conn.close()
+
 
 
 
