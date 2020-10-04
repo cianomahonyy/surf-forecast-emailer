@@ -145,7 +145,7 @@ def sendEmail(mailList):
 	print(currentDay)
 	print(forecastDay)
 	if(currentDay == forecastDay):
-		forecastString = forecastString + """<h1 style="color:#009879;text-align:center;">Today's Waves</h1>
+		forecastString = forecastString + """<h1 style="color:#009879;text-align:center;">Surf Forecast</h1>
 											  <img class="webcam-image" src="cid:image1"/>
 											  <table class="content-table">
 											  	<thead>
@@ -159,6 +159,7 @@ def sendEmail(mailList):
 												</thead>"""
 	else:
 		forecastString = forecastString + """ <h1 style="color:SlateGray;text-align:center;">Surf Forecast</h1>
+											<img class="webcam-image" src="cid:image1"/>
 											<table class="content-table">
 											  	<thead>
 												<tr>
