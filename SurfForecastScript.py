@@ -252,12 +252,7 @@ findGoodSwell();
 print(findGoodSwell());
 sendEmail(connectDB());
 
-
-
-
-
-
-
+quit();
 
 
 
