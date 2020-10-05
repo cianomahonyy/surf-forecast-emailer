@@ -101,7 +101,7 @@ def sendEmail(mailList):
 	msg = MIMEMultipart()
 	msg['Subject'] = 'Surf Forecast'
 	msg['From'] = EMAIL_ADDRESS
-	msg['To'] = ', '.join(recipients)
+	msg['Bcc'] = ', '.join(recipients)
 
 
 	# HTML String for displaying the data
