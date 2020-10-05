@@ -244,7 +244,7 @@ def connectDB():
 	conn.close()
 
 
-
+print(connectDB())
 
 connectDB();
 # Calling the functions
