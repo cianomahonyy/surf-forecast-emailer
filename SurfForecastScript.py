@@ -88,6 +88,8 @@ def findGoodSwell():
 # Function to send the email
 def sendEmail(mailList):
 
+	recipients = mailList
+
 	# Email variables
 	EMAIL_ADDRESS = 'surfforecastcork@gmail.com'
 	EMAIL_PASSWORD = config.EMAIL_PASSWORD
@@ -99,7 +101,7 @@ def sendEmail(mailList):
 	msg = MIMEMultipart()
 	msg['Subject'] = 'Surf Forecast'
 	msg['From'] = EMAIL_ADDRESS
-	msg['Bcc'] = ', '.join(mailList)
+	msg['To'] = ', '.join(recipients)
 
 
 	# HTML String for displaying the data
@@ -187,7 +189,6 @@ def sendEmail(mailList):
 
 	
 	forecastString = forecastString + """</tbody></table></body></html>"""
-	print(forecastString)
 
 
 	# Scraping the webcam image
@@ -235,8 +236,6 @@ def connectDB():
 
 	flattenList = list(chain.from_iterable(listEmails))
 
-
-
 	return flattenList
 
 	conn.commit()
@@ -244,7 +243,7 @@ def connectDB():
 	conn.close()
 
 
-print(connectDB())
+print(connectDB());
 
 connectDB();
 # Calling the functions
