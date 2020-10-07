@@ -24,7 +24,7 @@ from itertools import chain
 def findGoodSwell():
 
 	# Setting up the Magicseaweed API
-	response = requests.get("http://magicseaweed.com/api/28c500e859576a4f8bbcbe09c83e2492/forecast/?spot_id=3717")
+	response = requests.get("http://magicseaweed.com/api/" + config.API_KEY + "/forecast/?spot_id=3717")
 	data = json.loads(response.text)
 
 
