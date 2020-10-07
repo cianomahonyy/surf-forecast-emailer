@@ -174,22 +174,25 @@ def sendEmail(mailList):
 												</tr>
 												</thead>"""
 
+	if not starList:
+		forecastString = forecastString + """</tbody></table><h2 style="color:#009879;text-align:center;">No Good Waves In The Next 4 days</h2></body></html>"""
 	# Loop for adding multiple forecasts
-	for i in range(0, len(dateList)):
-		
-		forecastString = forecastString + """
-				<tbody>
-					<tr>
-						<td>""" + dateList[i] + """</td>
-						<td>""" + starList[i] + """</td>
-						<td>""" + swellList[i] + """</td>
-						<td>""" + windDirectionList[i] + """</td>
-						<td>""" + windSpeedList[i] + """</td>
-					</tr>
-				"""
+	else:    		
+		for i in range(0, len(dateList)):
+			
+			forecastString = forecastString + """
+					<tbody>
+						<tr>
+							<td>""" + dateList[i] + """</td>
+							<td>""" + starList[i] + """</td>
+							<td>""" + swellList[i] + """</td>
+							<td>""" + windDirectionList[i] + """</td>
+							<td>""" + windSpeedList[i] + """</td>
+						</tr>
+					"""
 
-	
-	forecastString = forecastString + """</tbody></table></body></html>"""
+		
+		forecastString = forecastString + """</tbody></table></body></html>"""
 
 
 	# Scraping the webcam image
@@ -200,6 +203,7 @@ def sendEmail(mailList):
 	
 	image.add_header('Content-ID', '<image1>')
 
+	
 	msg.attach(image)
 
 	# Sending the email
