@@ -58,12 +58,6 @@ def findGoodSwell():
 		day = datetime.utcfromtimestamp(unixDate).strftime('%A')
 		time = datetime.utcfromtimestamp(unixDate).strftime('%H:00')
 
-<<<<<<< HEAD
-		# Conditions for sending the email 
-		# You should probably change the star rating if you get better waves than Cork
-=======
-		# Conditions for sending the email
->>>>>>> refs/remotes/origin/main
 		if(star > 0):
 			if(str(time) != '00:00' and str(time) != '03:00' and str(time) != '06:00'):	
 				if(windDegrees > 101):
@@ -149,13 +143,10 @@ def sendEmail(mailList):
 							}
 							</style>
 							</head> """
-<<<<<<< HEAD
 
-
-=======
 	print(currentDay)
 	print(forecastDay)
->>>>>>> refs/remotes/origin/main
+
 	if(currentDay == forecastDay):
 		forecastString = forecastString + """<h1 style="color:#009879;text-align:center;">Surf Forecast</h1>
 											  <img class="webcam-image" src="cid:image1"/>
@@ -253,11 +244,6 @@ def connectDB():
 	conn.close()
 
 
-<<<<<<< HEAD
-=======
-print(connectDB());
-
->>>>>>> refs/remotes/origin/main
 connectDB();
 # Calling the functions
 getWebcamImage();
@@ -265,11 +251,8 @@ findGoodSwell();
 print(findGoodSwell());
 sendEmail(connectDB());
 
-<<<<<<< HEAD
 print('Email Sent')
 
-=======
->>>>>>> refs/remotes/origin/main
 quit();
 
 
