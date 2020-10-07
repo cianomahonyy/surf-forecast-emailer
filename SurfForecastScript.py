@@ -16,15 +16,15 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
 from itertools import chain
+from boto.s3.connection import S3Connection
 
-
-
+s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
 # Function for going through forecast
 def findGoodSwell():
 
 	# Setting up the Magicseaweed API
-	response = requests.get("http://magicseaweed.com/api/" + config.API_KEY + "/forecast/?spot_id=3717")
+	response = requests.get("http://magicseaweed.com/api/" + os.environ['API_KEY'] + "/forecast/?spot_id=3717")
 	data = json.loads(response.text)
 
 
@@ -91,7 +91,7 @@ def sendEmail(mailList):
 
 	# Email variables
 	EMAIL_ADDRESS = 'surfforecastcork@gmail.com'
-	EMAIL_PASSWORD = config.EMAIL_PASSWORD
+	EMAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
 	emailForecast = []
 	emailForecast, dateList, starList, swellList, windDirectionList, windSpeedList, forecastDay  = findGoodSwell();
 	currentDay = datetime.today().strftime('%A')
@@ -228,7 +228,7 @@ def getWebcamImage():
 def connectDB(): 
 
 
-	conn = psycopg2.connect(dbname=config.DB_NAME, port=5432, user=config.DB_USER, password=config.DB_PASS, host=config.DB_HOST)
+	conn = psycopg2.connect(dbname=os.environ['DB_NAME'], port=5432, user=os.environ['DB_USER'], password=os.environ['DB_PASS'], host=os.environ['DB_HOST'])
 
 
 	cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
