@@ -2,7 +2,7 @@
 
 import json
 import requests
-import config
+# import config
 import smtplib
 import psycopg2
 import psycopg2.extras
